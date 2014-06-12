@@ -47,6 +47,11 @@ public class EmbeddedElasticsearchConfig extends AnnotationConfigApplicationCont
     return new ElasticsearchTemplate(client);
   }
 
+  @Bean
+  public Client client() {
+    return client;
+  }
+
   public static void shutdownNode() {
     node.close();
   }

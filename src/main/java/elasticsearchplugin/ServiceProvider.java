@@ -1,6 +1,7 @@
 package elasticsearchplugin;
 
 
+import org.elasticsearch.client.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 
@@ -13,4 +14,7 @@ public class ServiceProvider {
 
   @Autowired
   public ElasticsearchTemplate template;
+
+  @Autowired
+  public Client client;
 }
