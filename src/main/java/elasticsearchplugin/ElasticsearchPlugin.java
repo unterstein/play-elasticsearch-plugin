@@ -60,7 +60,7 @@ public class ElasticsearchPlugin extends Plugin {
     }
 
 
-    final String mode = ConfigFactory.load().getString("neo4j.mode");
+    final String mode = ConfigFactory.load().getString("elasticsearch.mode");
 
     if (mode.equals("embedded")) {
       springContext = new AnnotationConfigApplicationContext(EmbeddedElasticsearchConfig.class);
