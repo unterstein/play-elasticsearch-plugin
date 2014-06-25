@@ -16,7 +16,8 @@ scalaVersion := "2.10.2"
 libraryDependencies ++= Seq(
    "com.typesafe.play" %% "play" % "2.2.3",
    "com.typesafe.play" %% "play-java" % "2.2.3",
-    "org.springframework.data" % "spring-data-elasticsearch" % "1.0.0.RELEASE"
+    "org.springframework.data" % "spring-data-elasticsearch" % "1.0.0.RELEASE",
+    "javax.enterprise" % "cdi-api" % "1.0"
 )
 
 publishTo <<= version {

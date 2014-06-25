@@ -1,7 +1,5 @@
 package elasticsearchplugin;
 
-import com.typesafe.config.ConfigFactory;
-import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
@@ -11,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.repository.cdi.ElasticsearchRepositoryBean;
+import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
 
@@ -20,13 +20,9 @@ import static org.elasticsearch.node.NodeBuilder.nodeBuilder;
  *         elasticsearch plugin with spring data
  */
 @Configuration
-@ComponentScan("elasticsearch")
+@EnableElasticsearchRepositories(basePackages = "elasticsearch.repositories", repositoryFactoryBeanClass = ElasticsearchRepositoryBean.class)
+//@ComponentScan("elasticsearch")
 public class EmbeddedElasticsearchConfig extends AnnotationConfigApplicationContext {
-
-  /**
-   * Config key which defines where the embedded database path is.
-   */
-  private static String EMBEDDED_DB_CFG_KEY = "elasticsearch.embeddedDB";
 
   private static Settings elasticsearchSettings = ImmutableSettings.settingsBuilder()
       .put("path.data", "target/elasticsearch-data") // TODO JU configurable
@@ -40,10 +36,6 @@ public class EmbeddedElasticsearchConfig extends AnnotationConfigApplicationCont
 
   @Bean
   public ElasticsearchTemplate elasticsearchTemplate() {
-    String embeddedDB = ConfigFactory.load().getString(EMBEDDED_DB_CFG_KEY);
-    if (StringUtils.isEmpty(embeddedDB) == true) {
-      throw new RuntimeException("Could not find config for embedded DB: " + EMBEDDED_DB_CFG_KEY);
-    }
     return new ElasticsearchTemplate(client);
   }
 
